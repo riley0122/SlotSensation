@@ -47,7 +47,7 @@ function calculateReward(bet) {
     // Introduce a random factor for variability
     reward *= 0.9 + Math.random() * (1.1 - 0.9);
 
-    return reward;
+    return Math.floor(reward);
 }
 
 /**
