@@ -30,11 +30,11 @@ const getNRstring = (input) => {
 
 /**
  * Calculates the reward when winning something
+ * @returns {Number}
+ * @param {Number} bet
  */
 const calcReward = (bet) => {
-  return bet > 10
-    ? Math.floor(bet + 1 / (0.01 * bet) + Math.random * 10 - 5)
-    : bet + Math.random * 10 - 1;
+  return bet;
 };
 
 module.exports = {
@@ -88,11 +88,11 @@ module.exports = {
       embeds: [{ title: "Dice roll", description: "*rolling......*" }],
     });
     await wait(250);
-    const result =
+    let result =
       Math.random() > 0.5
         ? Math.floor(Math.random() * 6)
         : Math.ceil(Math.random() * 6);
-
+    if (result == 0) result = 1;
     const reward = calcReward(interaction.options.getInteger("bet"));
 
     await interaction.editReply({
@@ -122,9 +122,13 @@ module.exports = {
       ],
     });
     if (result == interaction.options.getInteger("guess")) {
-      axios.get(
-        `http://localhost:54321/tokens/add/${interaction.user.id}?ammount=${reward}`
-      );
+      axios
+        .get(
+          `http://localhost:54321/tokens/add/${interaction.user.id}?ammount=${reward}`
+        )
+        .then((response) => {
+          console.log(response.data);
+        });
     }
   },
 };
