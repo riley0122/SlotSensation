@@ -125,31 +125,45 @@ module.exports = {
       return;
     }
     await interaction.reply({
-      embeds: [{ title: "Dice roll", description: "*rolling*" }],
+      embeds: [
+        { title: "Dice roll", description: "*rolling*", color: 0x26224d },
+      ],
     });
     await wait(250);
     await interaction.editReply({
-      embeds: [{ title: "Dice roll", description: "*rolling.*" }],
+      embeds: [
+        { title: "Dice roll", description: "*rolling.*", color: 0x352a6b },
+      ],
     });
     await wait(250);
     await interaction.editReply({
-      embeds: [{ title: "Dice roll", description: "*rolling..*" }],
+      embeds: [
+        { title: "Dice roll", description: "*rolling..*", color: 0x483189 },
+      ],
     });
     await wait(250);
     await interaction.editReply({
-      embeds: [{ title: "Dice roll", description: "*rolling...*" }],
+      embeds: [
+        { title: "Dice roll", description: "*rolling...*", color: 0x6036a7 },
+      ],
     });
     await wait(250);
     await interaction.editReply({
-      embeds: [{ title: "Dice roll", description: "*rolling....*" }],
+      embeds: [
+        { title: "Dice roll", description: "*rolling....*", color: 0x7b39c4 },
+      ],
     });
     await wait(250);
     await interaction.editReply({
-      embeds: [{ title: "Dice roll", description: "*rolling.....*" }],
+      embeds: [
+        { title: "Dice roll", description: "*rolling.....*", color: 0x9938e0 },
+      ],
     });
     await wait(250);
     await interaction.editReply({
-      embeds: [{ title: "Dice roll", description: "*rolling......*" }],
+      embeds: [
+        { title: "Dice roll", description: "*rolling......*", color: 0xbb31fb },
+      ],
     });
     await wait(250);
     let result =
@@ -197,6 +211,27 @@ module.exports = {
                 {
                   title: "Couldn't reward tokens!",
                   description: `Something went wrong rewarding your ${reward} tokens!`,
+                  color: 0xff0000,
+                },
+              ],
+            });
+          }
+        });
+    } else {
+      axios
+        .get(
+          `http://localhost:54321/tokens/remove/${
+            interaction.user.id
+          }?ammount=${interaction.options.getInteger("bet")}`
+        )
+        .then(async (response) => {
+          if (response.data.msg == "something went wrong!") {
+            await interaction.editReply({
+              embeds: [
+                {
+                  title: "Couldn't take tokens!",
+                  description: `Something went wrong taking your ${reward} tokens!`,
+                  color: 0xff0000,
                 },
               ],
             });
