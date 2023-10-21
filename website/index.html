@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slot Sensation</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="header">
+        <h1>Slot Sensation</h1>
+      </div>
+      <nav class="sticky">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li>
+            <a
+              href="https://discord.com/api/oauth2/authorize?client_id=1164930322715136061&permissions=2147534912&scope=bot"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Add to your server!</a
+            >
+          </li>
+          <li><a href="#commands">Commands</a></li>
+        </ul>
+      </nav>
+      <div id="content">
+        <div id="banner" style="height: calc(100vh - 7.5vh - 3vh)">
+          <br /><br />
+          <a
+            href="https://discord.com/api/oauth2/authorize?client_id=1164930322715136061&permissions=2147534912&scope=bot"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><img
+              src="banner.png"
+              alt="Image showing the bot's profile"
+              style="width: 60vw; border-radius: 10px"
+          /></a>
+          <h2>Add it now!</h2>
+          <p>For the ultimate gambling pleasure!</p>
+          <br /><br />
+          <small
+            >Gambling is done with virtual currency, we do not support gambling
+            with real money.</small
+          >
+        </div>
+        <div style="background-color: #36633b">
+          <hr id="about" />
+          <br /><br />
+          <h2>About</h2>
+          <p>
+            Welcome to Slot Sensation - the fun-loving Discord bot designed for
+            your entertainment!
+          </p>
+          <p>
+            Meet the creators behind Slot Sensation: Riley, Spectrum, and Ollie.
+            We embarked on this journey to bring a delightful and engaging
+            experience to Discord users.
+          </p>
+          <p>
+            While we're just getting started, we're excited about the potential
+            of Slot Sensation. As of now, you can enjoy the thrill of gambling
+            with our roulette feature.
+          </p>
+          <p>
+            Our journey has just begun, and we have big plans in store. We're
+            working on expanding our range of features and games, with blackjack
+            being one of the exciting additions on the horizon.
+          </p>
+          <p>
+            At Slot Sensation, we value your input and are eager to build a
+            strong and interactive community. We may not have a fully
+            established community platform just yet, but stay tuned for future
+            updates.
+          </p>
+          <p>
+            Slot Sensation is powered by Node.js and Discord.js, reflecting our
+            commitment to delivering a seamless experience for Discord users.
+          </p>
+          <p>
+            As we continue to grow and evolve, we look forward to sharing this
+            adventure with you. Please feel free to reach out to us at
+            <a href="mailto:me@lucasammer.com">me@lucasammer.com</a> with any
+            questions, suggestions, or just to say hello!
+          </p>
+          <br /><br />
+          <hr id="commands" />
+        </div>
+
+        <br /><br />
+
+        <h2>Commands and Features</h2>
+        <div class="command">
+          <h3>1. Gambling</h3>
+          <p><strong>Command:</strong> /roulette</p>
+          <p>
+            <strong>Description:</strong> Try your luck with our roulette
+            command! Bet virtual currency and see if you can win big. The odds
+            are in your hands.
+          </p>
+        </div>
+
+        <div class="command">
+          <h3>2. You Do That</h3>
+          <p><strong>Command:</strong> /me</p>
+          <p>
+            <strong>Description:</strong> Register yourself in our database, and
+            view your own profile.
+          </p>
+        </div>
+
+        <div class="command">
+          <h3>3. Daily Rewards</h3>
+          <p><strong>Command:</strong> /daily</p>
+          <p>
+            <strong>Description:</strong> Claim daily rewards to earn virtual
+            currency. Come back every day to collect bonuses and watch your
+            wealth grow!
+          </p>
+        </div>
+
+        <div class="command">
+          <h3>4. Dice Roll</h3>
+          <p><strong>Command:</strong> /dice</p>
+          <p>
+            <strong>Description:</strong> Roll virtual dice to test your luck by
+            guessing the outcome.
+          </p>
+        </div>
+
+        <div class="command">
+          <h3>5. User Profiles</h3>
+          <p><strong>Command:</strong> /profile</p>
+          <p>
+            <strong>Description:</strong> View your or other's user profile.
+            Show off your stats to other users.
+          </p>
+        </div>
+
+        <div class="command">
+          <h3>6. Motivation Boost</h3>
+          <p><strong>Command:</strong> /motivate</p>
+          <p>
+            <strong>Description:</strong> Get inspired with motivational quotes
+            and messages from our bot. Perfect for starting your day on a
+            positive note.
+          </p>
+        </div>
+        <div class="command">
+          <h3>7. Latency Check</h3>
+          <p><strong>Command:</strong> /ping</p>
+          <p>
+            <strong>Description:</strong> Check the bot's latency and
+            responsiveness in real-time. Useful for ensuring smooth interactions
+            with the bot.
+          </p>
+        </div>
+      </div>
+      <div id="footer"></div>
+    </div>
+
+    <script>
+      window.onscroll = function () {
+        // Check if the user has scrolled down 50px, you can adjust this value as needed
+        if (
+          document.body.scrollTop > 50 ||
+          document.documentElement.scrollTop > 50
+        ) {
+          document.getElementsByClassName("sticky")[0].style.top = "0";
+        } else {
+          document.getElementsByClassName("sticky")[0].style.top = "7.5vh";
+        }
+      };
+    </script>
+  </body>
+</html>
