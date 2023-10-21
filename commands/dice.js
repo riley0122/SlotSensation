@@ -52,6 +52,22 @@ const IsUser = (id) => {
   });
 };
 
+/**
+ * @returns {Boolean}
+ * @param {import("discord.js").Snowflake} id
+ * @param {Number} tokens
+ */
+const hasTokens = (id, tokens) => {
+  return new Promise(async (resolve) => {
+    const resp = await axios.get(`http://localhost:54321/user/${id}`);
+    if (resp.data.msg == "User not found!") {
+      resolve(false);
+    } else {
+      resolve(resp.data.tokens >= tokens);
+    }
+  });
+};
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("dice")
@@ -83,6 +99,26 @@ module.exports = {
             title: "You're not registered!",
             description:
               "You're not registered yet you silly goose, register with `/me`!",
+            color: 0xffff00,
+          },
+        ],
+      });
+      return;
+    }
+    let isBroke = await hasTokens(
+      interaction.user.id,
+      interaction.options.getInteger("bet")
+    );
+    isBroke = !isBroke;
+    console.log(isBroke);
+    if (isBroke) {
+      await interaction.reply({
+        embeds: [
+          {
+            title: "You don't have that much tokens!",
+            description: `You don't have ${interaction.options.getInteger(
+              "bet"
+            )} tokens! Try running \`/daily\`.`,
             color: 0xffff00,
           },
         ],
