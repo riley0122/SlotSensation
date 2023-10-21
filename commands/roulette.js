@@ -65,6 +65,56 @@ const hasTokens = (id, tokens) => {
   });
 };
 
+/**
+ * returns true if a number is considered low
+ * @param {Number} number
+ * @returns {Boolean}
+ */
+const isLow = (number) => {
+  if (number > 18) {
+    return false;
+  }
+  return true;
+};
+
+/**
+ * returns true if the square of a number is black
+ * @param {Number} number
+ * @returns {Boolean}
+ */
+const isBlack = (number) => {
+  if (number == 0) return false;
+  if (number <= 10 || (number >= 19 && number <= 28)) {
+    return number % 2 == 0;
+  }
+  return number % 2 != 0;
+};
+
+/**
+ * Checks if the user has won based of what they bet
+ * @param {Number} rolled
+ * @param {string} bet
+ * @returns {Boolean}
+ */
+const winCheck = (rolled, bet) => {
+  switch (bet) {
+    case "outside_high":
+      return !isLow(rolled);
+    case "outside_low":
+      return isLow(rolled);
+    case "outside_rouge":
+      return !isBlack(rolled);
+    case "outside_noir":
+      return isBlack(rolled);
+    case "outside_pair":
+      return rolled % 2 == 0;
+    case "outside_impair":
+      return !(rolled % 2 == 0);
+    default:
+      return false;
+  }
+};
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("roulette")
@@ -159,7 +209,10 @@ module.exports = {
       return;
     }
     const landedOn = Math.floor(Math.random() * 36);
-    const reward = calcReward(interaction.options.getInteger("wager") * 1.5);
+    const reward = calcReward(
+      interaction.options.getInteger("wager") *
+        (interaction.options.getString("bet").contains("outside_") ? 0.75 : 1.5)
+    );
     switch (interaction.options.getSubcommand()) {
       case "info":
         await interaction.reply({
@@ -358,7 +411,39 @@ module.exports = {
             }
           });
 
-        // TODO write these shanangins
+        if (winCheck(landedOn, interaction.options.getString("bet"))) {
+          await interaction.editReply({
+            embeds: [
+              {
+                type: "rich",
+                title: `Roulette spin`,
+                description: `You guessed ${interaction.options
+                  .getString("bet")
+                  .replace("outside_", "")} correctly!`,
+                color: 0x00ff00,
+                footer: {
+                  text: `You won ${reward} tokens!`,
+                },
+              },
+            ],
+          });
+        } else {
+          await interaction.editReply({
+            embeds: [
+              {
+                type: "rich",
+                title: `Roulette spin`,
+                description: `you lost, it was actually ${landedOn}`,
+                color: 0xff0000,
+                footer: {
+                  text: `You lost ${interaction.options.getInteger(
+                    "wager"
+                  )} tokens :(`,
+                },
+              },
+            ],
+          });
+        }
 
         axios // So that users cant spam and get more, this will be given back in the end: this is the end part
           .get(
