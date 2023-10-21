@@ -97,6 +97,9 @@ const isBlack = (number) => {
  * @returns {Boolean}
  */
 const winCheck = (rolled, bet) => {
+  if (rolled == 0) {
+    return false;
+  }
   switch (bet) {
     case "outside_high":
       return !isLow(rolled);
