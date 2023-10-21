@@ -79,7 +79,7 @@ module.exports = {
           } else {
             embed = {
               type: "rich",
-              title: `profile of ${interaction.member.displayName}`,
+              title: `profile of ${interaction.user.displayName}`,
               description: "",
               color: 0x5900ff,
               fields: [
