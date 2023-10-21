@@ -143,6 +143,27 @@ module.exports = {
       });
       return;
     }
+    axios // So that users cant spam and get more, this will be given back in the end
+      .get(
+        `http://localhost:54321/tokens/remove/${
+          interaction.user.id
+        }?ammount=${interaction.options.getInteger("bet")}`
+      )
+      .then(async (response) => {
+        if (response.data.msg == "something went wrong!") {
+          await interaction.reply({
+            embeds: [
+              {
+                title: "Couldn't take tokens!",
+                description: `Something went wrong taking your ${interaction.options.getInteger(
+                  "bet"
+                )} tokens!`,
+                color: 0xff0000,
+              },
+            ],
+          });
+        }
+      });
     await interaction.reply({
       embeds: [
         { title: "Dice roll", description: "*rolling*", color: 0x26224d },
@@ -257,5 +278,26 @@ module.exports = {
           }
         });
     }
+    axios // So that users cant spam and get more, this will be given back in the end: this is the end part
+      .get(
+        `http://localhost:54321/tokens/add/${
+          interaction.user.id
+        }?ammount=${interaction.options.getInteger("bet")}`
+      )
+      .then(async (response) => {
+        if (response.data.msg == "something went wrong!") {
+          await interaction.editReply({
+            embeds: [
+              {
+                title: "Couldn't return tokens!",
+                description: `Something went wrong returning your ${interaction.options.getInteger(
+                  "bet"
+                )} tokens!`,
+                color: 0xff0000,
+              },
+            ],
+          });
+        }
+      });
   },
 };
