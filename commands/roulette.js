@@ -212,10 +212,7 @@ module.exports = {
       return;
     }
     const landedOn = Math.floor(Math.random() * 36);
-    const reward = calcReward(
-      interaction.options.getInteger("wager") *
-        (interaction.options.getString("bet").includes("outside_") ? 0.75 : 1.5)
-    );
+    let reward = 0;
     switch (interaction.options.getSubcommand()) {
       case "info":
         await interaction.reply({
@@ -259,6 +256,7 @@ module.exports = {
         });
         break;
       case "single":
+        reward = calcReward(interaction.options.getInteger("wager") * 1.5);
         axios // So that users cant spam and get more, this will be given back in the end
           .get(
             `http://localhost:54321/tokens/remove/${
@@ -392,6 +390,15 @@ module.exports = {
           });
         break;
       case "outside":
+        reward = calcReward(
+          interaction.options.getInteger("wager") *
+            (interaction.options
+              .getString("bet")
+              .toString()
+              .includes("outside_")
+              ? 0.75
+              : 1.5)
+        );
         axios // So that users cant spam and get more, this will be given back in the end
           .get(
             `http://localhost:54321/tokens/remove/${
