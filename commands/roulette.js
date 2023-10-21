@@ -410,7 +410,22 @@ module.exports = {
               });
             }
           });
-
+        await interaction.reply({
+          embeds: [
+            {
+              type: "rich",
+              title: `Roulette spin`,
+              description: `spinning...`,
+              color: 0xffd700,
+              image: {
+                url: `https://i.gifer.com/8C5T.gif`,
+                height: 0,
+                width: 0,
+              },
+            },
+          ],
+        });
+        await wait(2500);
         if (winCheck(landedOn, interaction.options.getString("bet"))) {
           await interaction.editReply({
             embeds: [
