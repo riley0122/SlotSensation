@@ -442,6 +442,23 @@ module.exports = {
               },
             ],
           });
+          axios
+            .get(
+              `http://localhost:54321/tokens/add/${interaction.user.id}?ammount=${reward}`
+            )
+            .then(async (response) => {
+              if (response.data.msg == "something went wrong!") {
+                await interaction.editReply({
+                  embeds: [
+                    {
+                      title: "Couldn't reward tokens!",
+                      description: `Something went wrong rewarding your ${reward} tokens!`,
+                      color: 0xff0000,
+                    },
+                  ],
+                });
+              }
+            });
         } else {
           await interaction.editReply({
             embeds: [
@@ -472,6 +489,25 @@ module.exports = {
               },
             ],
           });
+          axios
+            .get(
+              `http://localhost:54321/tokens/remove/${
+                interaction.user.id
+              }?ammount=${interaction.options.getInteger("wager")}`
+            )
+            .then(async (response) => {
+              if (response.data.msg == "something went wrong!") {
+                await interaction.editReply({
+                  embeds: [
+                    {
+                      title: "Couldn't take tokens!",
+                      description: `Something went wrong taking your ${reward} tokens!`,
+                      color: 0xff0000,
+                    },
+                  ],
+                });
+              }
+            });
         }
 
         axios // So that users cant spam and get more, this will be given back in the end: this is the end part
