@@ -32,6 +32,13 @@ module.exports = {
             description: `Register with \`/me\``,
             color: 0xffff00,
           };
+        } else if (response.data.msg == "Not available yet") {
+          embed = {
+            type: "rich",
+            title: `Not ready!`,
+            description: `Daily reward has already been claimed today!`,
+            color: 0xffff00,
+          };
         } else {
           embed = {
             type: "rich",
