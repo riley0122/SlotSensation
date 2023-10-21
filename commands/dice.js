@@ -27,6 +27,28 @@ const getNRstring = (input) => {
       return "x";
   }
 };
+// function for reward curve by spectrum
+function calculateReward(bet) {
+    // Set values for a and b
+    var a = 10;  // Adjust to control extra reward for low bets
+    var b = 0.1;  // Adjust to control the rate of increase
+
+    // Generate a random factor between 0.8 and 1.2
+    var randomFactor = 0.8 + Math.random() * (1.2 - 0.8);
+
+    // Calculate the reward
+    var reward = bet + a * (1 - (1 - randomFactor) * Math.exp(-b * bet));
+
+    // Gradually decrease the additional reward for higher bets
+    var maxAdditionalReward = 10;  // Maximum additional reward
+    var additionalReward = maxAdditionalReward * (1 - (bet - 10) / 90);
+    reward += additionalReward;
+
+    // Introduce a random factor for variability
+    reward *= 0.9 + Math.random() * (1.1 - 0.9);
+
+    return reward;
+}
 
 /**
  * Calculates the reward when winning something
@@ -34,7 +56,7 @@ const getNRstring = (input) => {
  * @param {Number} bet
  */
 const calcReward = (bet) => {
-  return bet; // TODO make it actually return some kind of curve
+  return calculateReward(bet); // TODO make it actually return some kind of curve
 };
 
 /**
