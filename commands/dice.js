@@ -34,7 +34,7 @@ const getNRstring = (input) => {
  * @param {Number} bet
  */
 const calcReward = (bet) => {
-  return bet;
+  return bet; // TODO make it actually return some kind of curve
 };
 
 /**
