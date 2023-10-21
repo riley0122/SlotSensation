@@ -37,6 +37,21 @@ const calcReward = (bet) => {
   return bet;
 };
 
+/**
+ * @returns {Boolean}
+ * @param {import("discord.js").Snowflake} id
+ */
+const IsUser = (id) => {
+  return new Promise(async (resolve) => {
+    const resp = await axios.get(`http://localhost:54321/user/${id}`);
+    if (resp.data.msg == "User not found!") {
+      resolve(false);
+    } else {
+      resolve(true);
+    }
+  });
+};
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("dice")
@@ -60,6 +75,20 @@ module.exports = {
    * @param {import("discord.js").Interaction} interaction
    */
   async execute(interaction) {
+    let user = await IsUser(interaction.user.id);
+    if (!user) {
+      await interaction.reply({
+        embeds: [
+          {
+            title: "You're not registered!",
+            description:
+              "You're not registered yet you silly goose, register with `/me`!",
+            color: 0xffff00,
+          },
+        ],
+      });
+      return;
+    }
     await interaction.reply({
       embeds: [{ title: "Dice roll", description: "*rolling*" }],
     });
