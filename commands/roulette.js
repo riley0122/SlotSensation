@@ -211,7 +211,7 @@ module.exports = {
     const landedOn = Math.floor(Math.random() * 36);
     const reward = calcReward(
       interaction.options.getInteger("wager") *
-        (interaction.options.getString("bet").contains("outside_") ? 0.75 : 1.5)
+        (interaction.options.getString("bet").includes("outside_") ? 0.75 : 1.5)
     );
     switch (interaction.options.getSubcommand()) {
       case "info":
@@ -449,6 +449,20 @@ module.exports = {
                 type: "rich",
                 title: `Roulette spin`,
                 description: `you lost, it was actually ${landedOn}`,
+                fields: [
+                  {
+                    name: `High`,
+                    value: isLow(landedOn) ? "no" : "yes",
+                  },
+                  {
+                    name: `Black`,
+                    value: isBlack(landedOn) ? "yes" : "no",
+                  },
+                  {
+                    name: `Even`,
+                    value: landedOn % 2 == 0 ? "yes" : "no",
+                  },
+                ],
                 color: 0xff0000,
                 footer: {
                   text: `You lost ${interaction.options.getInteger(
