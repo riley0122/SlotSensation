@@ -128,6 +128,24 @@ app.get("/tokens/add/:userid", (req, res) => {
   );
 });
 
+app.get("/tokens/remove/:userid", (req, res) => {
+  if (!req.query.ammount || !isFinite(req.query.ammount)) {
+    res.json({ msg: "No ammount provided" });
+    return;
+  }
+  db.run(
+    "UPDATE users SET tokens = tokens - ? WHERE id = ?",
+    [Number(req.query.ammount), req.params.userid],
+    (err) => {
+      if (err) {
+        return res.json({ msg: "something went wrong!", log: err });
+      } else {
+        res.json({ msg: "Updated user!" });
+      }
+    }
+  );
+});
+
 const applyDaily = (streak, id) => {
   return new Promise((resolve) => {
     axios
