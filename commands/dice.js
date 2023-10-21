@@ -190,8 +190,17 @@ module.exports = {
         .get(
           `http://localhost:54321/tokens/add/${interaction.user.id}?ammount=${reward}`
         )
-        .then((response) => {
-          console.log(response.data);
+        .then(async (response) => {
+          if (response.data.msg == "something went wrong!") {
+            await interaction.editReply({
+              embeds: [
+                {
+                  title: "Couldn't reward tokens!",
+                  description: `Something went wrong rewarding your ${reward} tokens!`,
+                },
+              ],
+            });
+          }
         });
     }
   },
