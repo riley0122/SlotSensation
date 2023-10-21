@@ -110,7 +110,6 @@ module.exports = {
       interaction.options.getInteger("bet")
     );
     isBroke = !isBroke;
-    console.log(isBroke);
     if (isBroke) {
       await interaction.reply({
         embeds: [
