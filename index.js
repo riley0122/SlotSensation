@@ -197,7 +197,16 @@ app.get("/daily/:id", (req, res) => {
           }
           (async () => {
             if (await applyDaily(row.streak, req.params.id)) {
-              res.json({ msg: `Streak is now ${row.streak + 1}` });
+              let resp = await axios.get(
+                `https://top.gg/api/bots/1164930322715136061/check?userId=${req.params.id}`
+              );
+              res.json({
+                msg: `Streak is now ${row.streak + 1}${
+                  resp.data.voted
+                    ? ", Also applied 50 token voting bonus!"
+                    : "!"
+                }`,
+              });
             } else {
               res.json({ msg: `Something went wrong` });
             }
@@ -216,11 +225,26 @@ app.get("/daily/:id", (req, res) => {
             return;
           }
           (async () => {
+            let resp = await axios.get(
+              `https://top.gg/api/bots/1164930322715136061/check?userId=${req.params.id}`
+            );
             if (await applyDaily(0, req.params.id)) {
               if (row.streak == 0) {
-                res.json({ msg: `Started new streak!` });
+                res.json({
+                  msg: `Started new streak${
+                    resp.data.voted
+                      ? ", Also applied 50 token voting bonus!"
+                      : "!"
+                  }`,
+                });
               } else {
-                res.json({ msg: `Streak lost at ${row.streak}!` });
+                res.json({
+                  msg: `Streak lost at ${row.streak}${
+                    resp.data.voted
+                      ? ", Also applied 50 token voting bonus!"
+                      : "!"
+                  }`,
+                });
               }
             } else {
               res.json({ msg: `Something went wrong` });
