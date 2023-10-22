@@ -149,25 +149,22 @@ app.get("/tokens/remove/:userid", (req, res) => {
 const applyDaily = (streak, id) => {
   return new Promise((resolve) => {
     axios
-      .get(`https://top.gg/api/bots/1164930322715136061/check?userId=${id}`)
-      .then((resp) => {
-        axios
-          .get(
-            `http://localhost:54321/tokens/add/${id}?ammount=${
-              60 + 5 * Math.floor(Math.sqrt(streak)) + resp.data.voted * 50
-            }`
-          )
-          .then((respons) => {
-            if (respons.data.msg == "Updated user!") {
-              db.run(
-                "UPDATE users SET streak = ?, lastDaily = ? WHERE id = ?",
-                [streak + 1, new Date().toISOString().substring(0, 10), id]
-              );
-              resolve(true);
-            } else {
-              resolve(false);
-            }
-          });
+      .get(
+        `http://localhost:54321/tokens/add/${id}?ammount=${
+          60 + 5 * Math.floor(Math.sqrt(streak))
+        }`
+      )
+      .then((respons) => {
+        if (respons.data.msg == "Updated user!") {
+          db.run("UPDATE users SET streak = ?, lastDaily = ? WHERE id = ?", [
+            streak + 1,
+            new Date().toISOString().substring(0, 10),
+            id,
+          ]);
+          resolve(true);
+        } else {
+          resolve(false);
+        }
       });
   });
 };
@@ -197,16 +194,7 @@ app.get("/daily/:id", (req, res) => {
           }
           (async () => {
             if (await applyDaily(row.streak, req.params.id)) {
-              let resp = await axios.get(
-                `https://top.gg/api/bots/1164930322715136061/check?userId=${req.params.id}`
-              );
-              res.json({
-                msg: `Streak is now ${row.streak + 1}${
-                  resp.data.voted
-                    ? ", Also applied 50 token voting bonus!"
-                    : "!"
-                }`,
-              });
+              res.json({ msg: `Streak is now ${row.streak + 1}` });
             } else {
               res.json({ msg: `Something went wrong` });
             }
@@ -225,26 +213,11 @@ app.get("/daily/:id", (req, res) => {
             return;
           }
           (async () => {
-            let resp = await axios.get(
-              `https://top.gg/api/bots/1164930322715136061/check?userId=${req.params.id}`
-            );
             if (await applyDaily(0, req.params.id)) {
               if (row.streak == 0) {
-                res.json({
-                  msg: `Started new streak${
-                    resp.data.voted
-                      ? ", Also applied 50 token voting bonus!"
-                      : "!"
-                  }`,
-                });
+                res.json({ msg: `Started new streak!` });
               } else {
-                res.json({
-                  msg: `Streak lost at ${row.streak}${
-                    resp.data.voted
-                      ? ", Also applied 50 token voting bonus!"
-                      : "!"
-                  }`,
-                });
+                res.json({ msg: `Streak lost at ${row.streak}!` });
               }
             } else {
               res.json({ msg: `Something went wrong` });
