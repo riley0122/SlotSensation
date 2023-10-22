@@ -149,22 +149,25 @@ app.get("/tokens/remove/:userid", (req, res) => {
 const applyDaily = (streak, id) => {
   return new Promise((resolve) => {
     axios
-      .get(
-        `http://localhost:54321/tokens/add/${id}?ammount=${
-          60 + 5 * Math.floor(Math.sqrt(streak))
-        }`
-      )
-      .then((respons) => {
-        if (respons.data.msg == "Updated user!") {
-          db.run("UPDATE users SET streak = ?, lastDaily = ? WHERE id = ?", [
-            streak + 1,
-            new Date().toISOString().substring(0, 10),
-            id,
-          ]);
-          resolve(true);
-        } else {
-          resolve(false);
-        }
+      .get(`https://top.gg/api/bots/1164930322715136061/check?userId=${id}`)
+      .then((resp) => {
+        axios
+          .get(
+            `http://localhost:54321/tokens/add/${id}?ammount=${
+              60 + 5 * Math.floor(Math.sqrt(streak)) + resp.data.voted * 50
+            }`
+          )
+          .then((respons) => {
+            if (respons.data.msg == "Updated user!") {
+              db.run(
+                "UPDATE users SET streak = ?, lastDaily = ? WHERE id = ?",
+                [streak + 1, new Date().toISOString().substring(0, 10), id]
+              );
+              resolve(true);
+            } else {
+              resolve(false);
+            }
+          });
       });
   });
 };
