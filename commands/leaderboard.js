@@ -16,7 +16,7 @@ module.exports = {
         headers: { Authorization: `Bot ${token}` },
       })
       .then((result) => {
-        console.log(result.data);
+        interaction.editReply(`you are ${result.data.global_name}`);
       });
   },
 };
