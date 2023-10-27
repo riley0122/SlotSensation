@@ -88,6 +88,7 @@ const hasTokens = (id, tokens) => {
 };
 
 module.exports = {
+  cooldown: 5,
   data: new SlashCommandBuilder()
     .setName("dice")
     .setDescription("Roll a dice and guess the result")
