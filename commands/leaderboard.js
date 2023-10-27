@@ -11,12 +11,20 @@ module.exports = {
    */
   async execute(interaction) {
     await interaction.deferReply();
-    axios
-      .get(`https://canary.discord.com/api/v10/users/${interaction.user.id}`, {
-        headers: { Authorization: `Bot ${token}` },
-      })
-      .then((result) => {
-        interaction.editReply(`you are ${result.data.global_name}`);
-      });
+    let top = [];
+    axios.get("http://localhost:54321/users/top").then((resp) => {
+      for (let i = 0; i < resp.data.length; i++) {
+        const element = resp.data[i];
+        console.log(element.id);
+        axios
+          .get(`https://canary.discord.com/api/v10/users/${element.id}`, {
+            headers: { Authorization: `Bot ${token}` },
+          })
+          .then((result) => {
+            top.push(result.data.global_name);
+          });
+      }
+      interaction.editReply(top);
+    });
   },
 };
