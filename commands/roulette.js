@@ -119,6 +119,7 @@ const winCheck = (rolled, bet) => {
 };
 
 module.exports = {
+  cooldown: 12,
   data: new SlashCommandBuilder()
     .setName("roulette")
     .setDescription("Play a round of roulette!")
