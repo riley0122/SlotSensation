@@ -169,6 +169,15 @@ const applyDaily = (streak, id) => {
   });
 };
 
+app.get("/users/top", (req, res) => {
+  db.all("select * from users order by tokens desc limit 5", (err, rows) => {
+    if (err) {
+      res.status(500).json({ msg: "Something went wrong", log: err });
+    }
+    res.json(rows);
+  });
+});
+
 app.get("/daily/:id", (req, res) => {
   db.get("SELECT * FROM users WHERE id = ?", [req.params.id], (err, row) => {
     if (err) {
