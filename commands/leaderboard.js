@@ -15,16 +15,52 @@ module.exports = {
     axios.get("http://localhost:54321/users/top").then((resp) => {
       for (let i = 0; i < resp.data.length; i++) {
         const element = resp.data[i];
-        console.log(element.id);
-        axios
-          .get(`https://canary.discord.com/api/v10/users/${element.id}`, {
-            headers: { Authorization: `Bot ${token}` },
-          })
-          .then((result) => {
-            top.push(result.data.global_name);
-          });
+        element.id == interaction.user.id
+          ? top.push(
+              i +
+                ". " +
+                element.tokens +
+                `   *[${interaction.user.id
+                  .toString()
+                  .slice(0, 3)}${interaction.user.id
+                  .toString()
+                  .slice(5, 7)}]*` +
+                " **(you)**"
+            )
+          : top.push(
+              i +
+                ". " +
+                element.tokens +
+                `   *[${element.id.toString().slice(0, 3)}${element.id
+                  .toString()
+                  .slice(5, 7)}]*`
+            );
       }
-      interaction.editReply(top);
+      let colour;
+      let rand = Math.random();
+      if (rand < 0.33) {
+        colour = 0x590741;
+      } else if (rand > 0.66) {
+        colour = 0x490759;
+      } else {
+        colour = 0x7d1c9c;
+      }
+      interaction.editReply({
+        embeds: [
+          {
+            title: "Leaderboard",
+            description: "The top gamblers.",
+            fields: [
+              {
+                name: `Top 5`,
+                value: top.join("\n"),
+                inline: false,
+              },
+            ],
+            color: colour,
+          },
+        ],
+      });
     });
   },
 };
