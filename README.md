@@ -19,3 +19,5 @@ A discord bot for gambling with fictional currency
 `/motivate` Get a little motivation :)
 
 `/ping` Check if the bot hasn't died.
+
+`/leaderboard` Check the top 5 users with the most tokens
