@@ -241,6 +241,9 @@ app.get("/daily/:id", (req, res) => {
 client.cooldowns = new Collection();
 
 client.on(Events.InteractionCreate, async (interaction) => {
+  if (interaction.customId === "spin_again") {
+    interaction.client.commands.get("slots").execute(interaction);
+  }
   if (!interaction.isChatInputCommand()) return;
   const command = interaction.client.commands.get(interaction.commandName);
   if (!command) {
