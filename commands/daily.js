@@ -48,7 +48,7 @@ module.exports = {
           };
         }
 
-        interaction.editReply({ embeds: [embed] });
+        interaction.editReply({ embeds: [embed], ephemeral: response.data.msg == "User not found!" });
       });
   },
 };

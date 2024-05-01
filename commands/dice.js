@@ -122,6 +122,7 @@ module.exports = {
             color: 0xffff00,
           },
         ],
+        ephemeral: true
       });
       return;
     }
@@ -141,6 +142,7 @@ module.exports = {
             color: 0xffff00,
           },
         ],
+        ephemeral: true
       });
       return;
     }
